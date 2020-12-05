@@ -26,12 +26,12 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:  # Quit if closed
             running = False
-    screen.fill((255, 255, 255))  # Fill the background with white
+    screen.fill((0, 0, 0))  # Fill the background with white
     pygame.draw.circle(screen, (0, 0, 255), GAME_EARTH_POSITION, 100)  # Draw the Earth
 
     # Define the rocket
     rocket_surface = pygame.Surface((50, 50))
-    rocket_surface.fill((0, 0, 0))
+    rocket_surface.fill((255, 255, 255))
     rocket_rect = rocket_surface.get_rect()
 
     # Rocket calculations
