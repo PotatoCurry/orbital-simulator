@@ -26,7 +26,7 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:  # Quit if closed
             running = False
-    screen.fill((0, 0, 0))  # Fill the background with white
+    screen.fill((0, 0, 0))  # Fill the background with black
     pygame.draw.circle(screen, (0, 0, 255), GAME_EARTH_POSITION, 100)  # Draw the Earth
 
     # Define the rocket
