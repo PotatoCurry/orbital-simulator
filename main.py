@@ -35,7 +35,7 @@ while running:
     screen.fill((0, 0, 0))  # Fill the background with black
     pygame.draw.circle(screen, (0, 255, 0), GAME_EARTH_POSITION, 64+225)
     pygame.draw.circle(screen, (0, 0, 0), GAME_EARTH_POSITION, 64+175)
-    pygame.draw.circle(screen, (0, 0, 255), GAME_EARTH_POSITION, 100)  # Draw the Earth
+    pygame.draw.circle(screen, (0, 0, 255), GAME_EARTH_POSITION, 64)  # Draw the Earth with 64pixel wide = 6400km radius
 
     # Define the rocket
     rocket_surface = pygame.Surface((50, 50))
