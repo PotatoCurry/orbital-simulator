@@ -4,20 +4,17 @@ from pygame import Vector2
 
 from globals import EARTH_MASS, GRAVITATIONAL_CONSTANT, ROCKET_MASS, NORMALIZATION_CONSTANT
 
-# fuel_mass = 2380000
-
 
 # Find the acceleration of gravity on the rocket
-def gravitational_acceleration(rocket_position: Vector2, earth_position):
-    distance = rocket_position.distance_to(earth_position)
-    angle = angle_to_earth(rocket_position, earth_position)
+def gravitational_acceleration(rocket, earth_position):
+    distance = rocket.position.distance_to(earth_position)
+    angle = angle_to_earth(rocket.position, earth_position)
     magnitude = (GRAVITATIONAL_CONSTANT * EARTH_MASS) / pow(denormalize_distance(distance), 2)
     return Vector2(magnitude * -cos(angle), magnitude * sin(angle))
 
 
 # Find the acceleration of the rocket itself, burning fuel in the process
-def fuel_to_acceleration(rocket_position: Vector2, earth_position, rocket):
-    angle = angle_to_earth(rocket_position, earth_position)
+def fuel_to_acceleration(rocket):
     angle = 1.7
     total_rocket_mass = ROCKET_MASS + rocket.fuel_mass
     thrust_acceleration_magnitude = 0
