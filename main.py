@@ -1,7 +1,7 @@
 import pygame
 from pygame.math import Vector2
 
-from calculations import gravitational_acceleration, fuel_to_acceleration
+from calculations import gravitational_acceleration, fuel_to_acceleration, denormalize_distance
 from globals import TIME_CONSTANT, FPS
 from rocket import Rocket
 from textbox import InputBox
