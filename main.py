@@ -51,10 +51,10 @@ while running:
 
     # TODO: Properly determine the denormalized values
     info0 = font.render('Time Elapsed: ' + str(round(pygame.time.get_ticks()/1000)), True, (255,0,255))
-    info1 = font.render('X Position: ' + str(round(denormalize_distance(rocket_position.x-GAME_EARTH_POSITION.x))), True, (255, 0, 255))
-    info2 = font.render('Y Position: ' + str(round(-denormalize_distance(rocket_position.y-GAME_EARTH_POSITION.y))), True, (255, 0, 255))
-    info3 = font.render('X Velocity: ' + str(round(denormalize_distance(rocket_velocity.x))), True, (255, 0, 255))
-    info4 = font.render('Y Velocity: ' + str(round(denormalize_distance(rocket_velocity.y))), True, (255, 0, 255))
+    info1 = font.render('X Position: ' + str(round(denormalize_distance(rocket.position.x-GAME_EARTH_POSITION.x))), True, (255, 0, 255))
+    info2 = font.render('Y Position: ' + str(round(-denormalize_distance(rocket.position.y-GAME_EARTH_POSITION.y))), True, (255, 0, 255))
+    info3 = font.render('X Velocity: ' + str(round(denormalize_distance(rocket.velocity.x))), True, (255, 0, 255))
+    info4 = font.render('Y Velocity: ' + str(round(denormalize_distance(rocket.velocity.y))), True, (255, 0, 255))
     info5 = font.render('X Acceleration: ' + str(round(denormalize_distance(rocket_acceleration.x))), True, (255, 0, 255))
     info6 = font.render('Y Acceleration: ' + str(round(denormalize_distance(rocket_acceleration.y))), True, (255, 0, 255))
     info7 = font.render('Fuel Mass: ' + str(rocket.fuel_mass), True, (255, 0, 255))
