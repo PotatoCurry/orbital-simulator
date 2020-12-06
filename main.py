@@ -1,12 +1,13 @@
 import pygame
 from pygame.math import Vector2
 
-from calculations import gravitational_acceleration
+from calculations import gravitational_acceleration, fuel_to_acceleration
+from globals import TIME_CONSTANT, FPS
+from rocket import Rocket
 
 pygame.init()
 
 # Set up the drawing window
-FPS = 60
 WIDTH = 1000
 HEIGHT = 1000
 GAME_EARTH_POSITION = Vector2(WIDTH / 2, HEIGHT / 2)
@@ -15,8 +16,9 @@ FramePerSec = pygame.time.Clock()
 font = pygame.font.SysFont('Arial', 20)
 
 # Rocket movement
-rocket_position = Vector2(500, 850)
-rocket_velocity = Vector2(18, 0)
+rocket = Rocket()
+rocket_position = Vector2(500, 400)
+rocket_velocity = Vector2(0, 0)
 rocket_acceleration = Vector2(0, 0)
 
 # Run until the user asks to quit
@@ -35,28 +37,32 @@ while running:
     rocket_rect = rocket_surface.get_rect()
 
     # Rocket calculations
-    rocket_acceleration = gravitational_acceleration(rocket_position, GAME_EARTH_POSITION)
-    rocket_velocity += rocket_acceleration / FPS
-    rocket_position += rocket_velocity / FPS
+    rocket_acceleration = gravitational_acceleration(rocket_position, GAME_EARTH_POSITION) + fuel_to_acceleration(rocket_position, GAME_EARTH_POSITION, rocket)
+    # fuel_mass -= 10 / TIME_CONSTANT
+    # rocket_acceleration = fuel_to_acceleration(rocket_position, GAME_EARTH_POSITION)
+    rocket_velocity += rocket_acceleration / TIME_CONSTANT
+    rocket_position += rocket_velocity / TIME_CONSTANT
 
     # TODO: Denormalize to real values
+    info0 = font.render('Time Elapsed: ' + str(round(pygame.time.get_ticks()/1000)), True, (255,0,255))
     info1 = font.render('X Position: ' + str(rocket_position.x), True, (255, 0, 255))
     info2 = font.render('Y Position: ' + str(rocket_position.y), True, (255, 0, 255))
     info3 = font.render('X Velocity: ' + str(rocket_velocity.x), True, (255, 0, 255))
     info4 = font.render('Y Velocity: ' + str(rocket_velocity.y), True, (255, 0, 255))
     info5 = font.render('X Acceleration: ' + str(rocket_acceleration.x), True, (255, 0, 255))
     info6 = font.render('Y Acceleration: ' + str(rocket_acceleration.y), True, (255, 0, 255))
-    info7 = font.render('Time Elapsed: ' + str(round(pygame.time.get_ticks()/1000)), True, (255,0,255))
+    info7 = font.render('Fuel Mass: ' + str(rocket.fuel_mass), True, (255, 0, 255))
 
     # Draw to the display
     screen.blit(rocket_surface, rocket_position)
+    screen.blit(info0, (20, 0))
     screen.blit(info1, (20, 20))
     screen.blit(info2, (20, 40))
     screen.blit(info3, (20, 60))
     screen.blit(info4, (20, 80))
     screen.blit(info5, (20, 100))
     screen.blit(info6, (20, 120))
-    screen.blit(info7, (20,140))
+    screen.blit(info7, (20, 140))
     pygame.display.flip()
     FramePerSec.tick(FPS)
 

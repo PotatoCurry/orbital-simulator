@@ -2,17 +2,29 @@ from math import atan2, sin, cos
 
 from pygame import Vector2
 
-REAL_EARTH_RADIUS = 6371  # 6,371 km
-REAL_EARTH_MASS = 5.972e24  # 5.972 * 10^24 kg
-GRAVITATIONAL_CONSTANT = 6.67408e-11
-NORMALIZATION_CONSTANT = 0.1 / REAL_EARTH_RADIUS
+from globals import EARTH_MASS, GRAVITATIONAL_CONSTANT, ROCKET_MASS, NORMALIZATION_CONSTANT
+
+# fuel_mass = 2380000
 
 
+# Find the acceleration of gravity on the rocket
 def gravitational_acceleration(rocket_position: Vector2, earth_position):
     distance = rocket_position.distance_to(earth_position)
     angle = angle_to_earth(rocket_position, earth_position)
-    magnitude = (GRAVITATIONAL_CONSTANT * REAL_EARTH_MASS) / pow(denormalize_distance(distance), 2)
-    return Vector2(-magnitude * cos(angle), magnitude * sin(angle))
+    magnitude = (GRAVITATIONAL_CONSTANT * EARTH_MASS) / pow(denormalize_distance(distance), 2)
+    return Vector2(magnitude * -cos(angle), magnitude * sin(angle))
+
+
+# Find the acceleration of the rocket itself, burning fuel in the process
+def fuel_to_acceleration(rocket_position: Vector2, earth_position, rocket):
+    angle = angle_to_earth(rocket_position, earth_position)
+    angle = 1.7
+    total_rocket_mass = ROCKET_MASS + rocket.fuel_mass
+    thrust_acceleration_magnitude = 0
+    if rocket.fuel_mass > 0:
+        rocket.fuel_mass -= 1000
+        thrust_acceleration_magnitude = 25000000 / total_rocket_mass
+    return Vector2(thrust_acceleration_magnitude * cos(angle), thrust_acceleration_magnitude * -sin(angle))
 
 
 def angle_to_earth(rocket_position: Vector2, earth_position: Vector2):
