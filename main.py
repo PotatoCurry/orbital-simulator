@@ -4,7 +4,7 @@ from pygame.math import Vector2
 from calculations import gravitational_acceleration, fuel_to_acceleration
 from globals import TIME_CONSTANT, FPS
 from rocket import Rocket
-
+from textbox import InputBox
 pygame.init()
 
 # Set up the drawing window
@@ -17,6 +17,10 @@ font = pygame.font.SysFont('Arial', 20)
 
 # Rocket movement
 rocket = Rocket()
+#Init vel and angle text boxes
+input_vel = InputBox(100, 850, 140, 32)  #x y w h
+input_ang = InputBox(100, 900, 140, 32)
+input_boxes = [input_vel, input_ang]
 
 # Run until the user asks to quit
 running = True
@@ -25,6 +29,9 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:  # Quit if closed
             running = False
+        for box in input_boxes:
+            box.handle_event(event)
+
     screen.fill((0, 0, 0))  # Fill the background with black
     pygame.draw.circle(screen, (0, 0, 255), GAME_EARTH_POSITION, 100)  # Draw the Earth
 
@@ -49,6 +56,11 @@ while running:
     info5 = font.render('X Acceleration: ' + str(rocket_acceleration.x), True, (255, 0, 255))
     info6 = font.render('Y Acceleration: ' + str(rocket_acceleration.y), True, (255, 0, 255))
     info7 = font.render('Fuel Mass: ' + str(rocket.fuel_mass), True, (255, 0, 255))
+
+    #update and draw text boxes
+    for box in input_boxes:
+        box.update()
+        box.draw(screen)
 
     # Draw to the display
     screen.blit(rocket_surface, rocket.position)
