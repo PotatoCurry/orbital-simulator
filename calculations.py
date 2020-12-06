@@ -9,7 +9,7 @@ from globals import EARTH_MASS, GRAVITATIONAL_CONSTANT, ROCKET_MASS, NORMALIZATI
 def gravitational_acceleration(rocket, earth_position):
     distance = rocket.position.distance_to(earth_position)
     angle = angle_to_earth(rocket.position, earth_position)
-    magnitude = (GRAVITATIONAL_CONSTANT * EARTH_MASS) / pow(denormalize_distance(distance), 2)
+    magnitude = (GRAVITATIONAL_CONSTANT * EARTH_MASS) / pow(denormalize_distance(distance)*1000, 2)
     return Vector2(magnitude * -cos(angle), magnitude * sin(angle))
 
 

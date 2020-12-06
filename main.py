@@ -43,7 +43,7 @@ while running:
     rocket_rect = rocket_surface.get_rect()
 
     # Rocket calculations
-    rocket_acceleration = gravitational_acceleration(rocket, GAME_EARTH_POSITION) + fuel_to_acceleration(rocket)
+    rocket_acceleration = gravitational_acceleration(rocket, GAME_EARTH_POSITION) #+ fuel_to_acceleration(rocket)
     # fuel_mass -= 10 / TIME_CONSTANT
     # rocket_acceleration = fuel_to_acceleration(rocket_position, GAME_EARTH_POSITION)
     rocket.velocity += rocket_acceleration / TIME_CONSTANT
@@ -51,12 +51,12 @@ while running:
 
     # TODO: Properly determine the denormalized values
     info0 = font.render('Time Elapsed: ' + str(round(pygame.time.get_ticks()/1000)), True, (255,0,255))
-    info1 = font.render('X Position: ' + str(round(denormalize_distance(rocket.position.x-GAME_EARTH_POSITION.x))), True, (255, 0, 255))
-    info2 = font.render('Y Position: ' + str(round(-denormalize_distance(rocket.position.y-GAME_EARTH_POSITION.y))), True, (255, 0, 255))
-    info3 = font.render('X Velocity: ' + str(round(denormalize_distance(rocket.velocity.x))), True, (255, 0, 255))
-    info4 = font.render('Y Velocity: ' + str(round(denormalize_distance(rocket.velocity.y))), True, (255, 0, 255))
-    info5 = font.render('X Acceleration: ' + str(round(denormalize_distance(rocket_acceleration.x))), True, (255, 0, 255))
-    info6 = font.render('Y Acceleration: ' + str(round(denormalize_distance(rocket_acceleration.y))), True, (255, 0, 255))
+    info1 = font.render('X Position: ' + str(round(rocket.position.x-GAME_EARTH_POSITION.x)), True, (255, 0, 255))
+    info2 = font.render('Y Position: ' + str(-round((rocket.position.y-GAME_EARTH_POSITION.y))), True, (255, 0, 255))
+    info3 = font.render('X Velocity: ' + str(round(1000*rocket.velocity.x)/1000), True, (255, 0, 255))
+    info4 = font.render('Y Velocity: ' + str(-round(1000*rocket.velocity.y)/1000), True, (255, 0, 255))
+    info5 = font.render('X Acceleration: ' + str(round(100*rocket_acceleration.x)/100), True, (255, 0, 255))
+    info6 = font.render('Y Acceleration: ' + str(-round(100*rocket_acceleration.y)/100), True, (255, 0, 255))
     info7 = font.render('Fuel Mass: ' + str(rocket.fuel_mass), True, (255, 0, 255))
 
     #update and draw text boxes
@@ -65,7 +65,7 @@ while running:
         box.draw(screen)
 
     # Draw to the display
-    screen.blit(rocket_surface, rocket.position)
+    screen.blit(rocket_surface, rocket.position-(25,25))
     screen.blit(info0, (20, 0))
     screen.blit(info1, (20, 20))
     screen.blit(info2, (20, 40))
