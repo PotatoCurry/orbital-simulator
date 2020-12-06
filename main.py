@@ -46,6 +46,7 @@ while running:
     info4 = font.render('Y Velocity: ' + str(rocket_velocity.y), True, (255, 0, 255))
     info5 = font.render('X Acceleration: ' + str(rocket_acceleration.x), True, (255, 0, 255))
     info6 = font.render('Y Acceleration: ' + str(rocket_acceleration.y), True, (255, 0, 255))
+    info7 = font.render('Time Elapsed: ' + str(round(pygame.time.get_ticks()/1000)), True, (255,0,255))
 
     # Draw to the display
     screen.blit(rocket_surface, rocket_position)
@@ -55,6 +56,7 @@ while running:
     screen.blit(info4, (20, 80))
     screen.blit(info5, (20, 100))
     screen.blit(info6, (20, 120))
+    screen.blit(info7, (20,140))
     pygame.display.flip()
     FramePerSec.tick(FPS)
 
