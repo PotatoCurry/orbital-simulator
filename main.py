@@ -2,9 +2,10 @@ import pygame
 from pygame.math import Vector2
 
 from calculations import gravitational_acceleration, fuel_to_acceleration, denormalize_distance
-from globals import TIME_CONSTANT, FPS
+from globals import TIME_CONSTANT, FPS, REAL_EARTH_RADIUS
 from rocket import Rocket
 from textbox import InputBox
+
 pygame.init()
 
 # Set up the drawing window
@@ -35,7 +36,7 @@ while running:
     screen.fill((0, 0, 0))  # Fill the background with black
     pygame.draw.circle(screen, (0, 255, 0), GAME_EARTH_POSITION, 64+225)
     pygame.draw.circle(screen, (0, 0, 0), GAME_EARTH_POSITION, 64+175)
-    pygame.draw.circle(screen, (0, 0, 255), GAME_EARTH_POSITION, 64)  # Draw the Earth with 64pixel wide = 6400km radius
+    pygame.draw.circle(screen, (0, 0, 255), GAME_EARTH_POSITION, REAL_EARTH_RADIUS/100)  # Draw the Earth with a 1:100 pixel:km scale
 
     # Define the rocket
     rocket_surface = pygame.Surface((50, 50))
@@ -49,15 +50,16 @@ while running:
     rocket.velocity += rocket_acceleration / TIME_CONSTANT
     rocket.position += rocket.velocity / TIME_CONSTANT
 
-    # TODO: Properly determine the denormalized values
+    # Render rocket info
     info0 = font.render('Time Elapsed: ' + str(round(pygame.time.get_ticks()/1000)), True, (255,0,255))
-    info1 = font.render('X Position: ' + str(round(rocket.position.x-GAME_EARTH_POSITION.x)), True, (255, 0, 255))
-    info2 = font.render('Y Position: ' + str(-round((rocket.position.y-GAME_EARTH_POSITION.y))), True, (255, 0, 255))
-    info3 = font.render('X Velocity: ' + str(round(1000*rocket.velocity.x)/1000), True, (255, 0, 255))
-    info4 = font.render('Y Velocity: ' + str(-round(1000*rocket.velocity.y)/1000), True, (255, 0, 255))
-    info5 = font.render('X Acceleration: ' + str(round(100*rocket_acceleration.x)/100), True, (255, 0, 255))
-    info6 = font.render('Y Acceleration: ' + str(-round(100*rocket_acceleration.y)/100), True, (255, 0, 255))
+    info1 = font.render('X Position: ' + str(round(denormalize_distance(rocket.position.x-GAME_EARTH_POSITION.x))), True, (255, 0, 255))
+    info2 = font.render('Y Position: ' + str(-round(denormalize_distance(rocket.position.y-GAME_EARTH_POSITION.y))), True, (255, 0, 255))
+    info3 = font.render('X Velocity: ' + str(round(denormalize_distance(1000*rocket.velocity.x)/1000)), True, (255, 0, 255))
+    info4 = font.render('Y Velocity: ' + str(-round(denormalize_distance(1000*rocket.velocity.y)/1000)), True, (255, 0, 255))
+    info5 = font.render('X Acceleration: ' + str(round(denormalize_distance(100*rocket_acceleration.x))/100), True, (255, 0, 255))
+    info6 = font.render('Y Acceleration: ' + str(-round(denormalize_distance(100*rocket_acceleration.y))/100), True, (255, 0, 255))
     info7 = font.render('Fuel Mass: ' + str(rocket.fuel_mass), True, (255, 0, 255))
+    #print(pow(pow(rocket.velocity.x,2)+pow(rocket.velocity.y,2),1/2)) save to check for distances
 
     #update and draw text boxes
     for box in input_boxes:
