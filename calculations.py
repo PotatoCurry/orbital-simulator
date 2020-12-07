@@ -2,7 +2,7 @@ from math import atan2, sin, cos
 
 from pygame import Vector2
 
-from globals import EARTH_MASS, GRAVITATIONAL_CONSTANT, NORMALIZATION_CONSTANT
+from globals import SUN_MASS, GRAVITATIONAL_CONSTANT, NORMALIZATION_CONSTANT
 
 from rocket import Rocket
 
@@ -11,7 +11,7 @@ from rocket import Rocket
 def gravitational_acceleration(rocket, earth_position):
     distance = rocket.position.distance_to(earth_position)
     angle = angle_to_earth(rocket.position, earth_position)
-    magnitude = normalize_distance((GRAVITATIONAL_CONSTANT * EARTH_MASS) / pow(denormalize_distance(distance)*1000, 2))/1000
+    magnitude = normalize_distance((GRAVITATIONAL_CONSTANT * SUN_MASS) / pow(denormalize_distance(distance)*1000, 2))/1000
     return Vector2(magnitude * -cos(angle), magnitude * sin(angle))
 
 
