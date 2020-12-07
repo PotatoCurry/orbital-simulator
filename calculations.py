@@ -1,38 +1,21 @@
-from math import atan2, sin, cos
+from math import atan2, sin, cos, sqrt
 
 from pygame import Vector2
 
-from globals import SUN_MASS, GRAVITATIONAL_CONSTANT, NORMALIZATION_CONSTANT
-
-from rocket import Rocket
+from globals import SUN_MASS, GRAVITATIONAL_CONSTANT, NORMALIZATION_CONSTANT, SUN_POS
 
 
 # Find the acceleration of gravity on the rocket
-def gravitational_acceleration(rocket, earth_position):
-    distance = rocket.position.distance_to(earth_position)
-    angle = angle_to_earth(rocket.position, earth_position)
+def sun_gravity(location: Vector2):
+    distance = sqrt(pow(location.x-SUN_POS.x,2)+pow(location.y-SUN_POS.y,2))
+    angle = angle_to_sun(location, Vector2(500,500))
     magnitude = normalize_distance((GRAVITATIONAL_CONSTANT * SUN_MASS) / pow(denormalize_distance(distance)*1000, 2))/1000
     return Vector2(magnitude * -cos(angle), magnitude * sin(angle))
 
 
-# Find the acceleration of the rocket itself, burning fuel in the process
-def fuel_to_acceleration(rocket):
-    angle = rocket_angle(rocket)
-    total_rocket_mass = rocket.mass + rocket.fuel_mass
-    thrust_acceleration_magnitude = 0
-    if rocket.fuel_mass > 0:
-        rocket.fuel_mass -= 1000
-        thrust_acceleration_magnitude = 25000000 / total_rocket_mass
-    return Vector2(thrust_acceleration_magnitude * cos(angle), thrust_acceleration_magnitude * -sin(angle))
-
-
-def rocket_angle(rocket: Rocket):
-    return atan2(rocket.velocity.y, rocket.velocity.x)
-
-
-def angle_to_earth(rocket_position: Vector2, earth_position: Vector2):
-    dx = rocket_position.x - earth_position.x
-    dy = rocket_position.y - earth_position.y
+def angle_to_sun(rocket_position: Vector2, sun_position: Vector2):
+    dx = rocket_position.x - sun_position.x
+    dy = rocket_position.y - sun_position.y
     return atan2(-dy, dx)
 
 
