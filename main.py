@@ -1,7 +1,7 @@
 import pygame
 from pygame.math import Vector2
 
-from calculations import gravitational_acceleration, fuel_to_acceleration, denormalize_distance
+from calculations import gravitational_acceleration, fuel_to_acceleration, denormalize_distance, normalize_distance
 from globals import TIME_CONSTANT, FPS, REAL_EARTH_RADIUS
 from rocket import Rocket
 from textbox import InputBox
@@ -50,6 +50,8 @@ while running:
     screen.fill((0, 0, 0))  # Fill the background with black
     pygame.draw.circle(screen, (0, 255, 0), GAME_EARTH_POSITION, 64+225)
     pygame.draw.circle(screen, (0, 0, 0), GAME_EARTH_POSITION, 64+175)
+    pygame.draw.line(screen,(50,50,50),(500,0),(500,1000))
+    pygame.draw.line(screen,(50,50,50),(0,500),(1000,500))
     pygame.draw.circle(screen, (0, 0, 255), GAME_EARTH_POSITION, 64)  # Draw the Earth with 64pixel wide = 6400km radius
 
     pygame.draw.rect(screen, (200,0,0), (950, 200, 30, 600)) #fuel bar
@@ -73,18 +75,18 @@ while running:
         #keep time at zero before starting
         if(not start):  #init values in text boxes
             time = 0 
-            rocket.velocity.x = input_velx.gettext();
-            rocket.velocity.y = input_vely.gettext();
+            rocket.velocity.x = normalize_distance(input_velx.gettext())
+            rocket.velocity.y = normalize_distance(input_vely.gettext())
 
     # TODO: Properly determine the denormalized values
-    info0 = font.render('Time Elapsed: ' + str(time), True, (255,0,255))
-    info1 = font.render('X Position: ' + str(round(denormalize_distance(rocket.position.x-GAME_EARTH_POSITION.x))), True, (255, 0, 255))
-    info2 = font.render('Y Position: ' + str(round(-denormalize_distance(rocket.position.y-GAME_EARTH_POSITION.y))), True, (255, 0, 255))
-    info3 = font.render('X Velocity: ' + str(round(denormalize_distance(rocket.velocity.x),3)), True, (255, 0, 255))
-    info4 = font.render('Y Velocity: ' + str(round(denormalize_distance(rocket.velocity.y),3)), True, (255, 0, 255))
-    info5 = font.render('X Acceleration: ' + str(round(denormalize_distance(rocket_acceleration.x),3)), True, (255, 0, 255))
-    info6 = font.render('Y Acceleration: ' + str(round(denormalize_distance(rocket_acceleration.y),3)), True, (255, 0, 255))
-    info7 = font.render('Fuel Mass: ' + str(rocket.fuel_mass), True, (255, 0, 255))
+    info0 = font.render('Time Elapsed: ' + str(time)+ " seconds", True, (255,0,255))
+    info1 = font.render('X Position: ' + str(round(denormalize_distance(rocket.position.x-GAME_EARTH_POSITION.x)))+ " km", True, (255, 0, 255))
+    info2 = font.render('Y Position: ' + str(round(-denormalize_distance(rocket.position.y-GAME_EARTH_POSITION.y)))+ " km", True, (255, 0, 255))
+    info3 = font.render('X Velocity: ' + str(round(denormalize_distance(rocket.velocity.x),3))+ " km/s", True, (255, 0, 255))
+    info4 = font.render('Y Velocity: ' + str(round(denormalize_distance(rocket.velocity.y),3))+ " km/s", True, (255, 0, 255))
+    info5 = font.render('X Acceleration: ' + str(round(denormalize_distance(rocket_acceleration.x)*1000,3)) + " m/s/s", True, (255, 0, 255))
+    info6 = font.render('Y Acceleration: ' + str(round(denormalize_distance(rocket_acceleration.y)*1000,3)) + " m/s/s", True, (255, 0, 255))
+    info7 = font.render('Fuel Mass: ' + str(rocket.fuel_mass)+ " kilograms", True, (255, 0, 255))
 
     textvelx = font.render('Velocity X_i', True, (255, 0, 255))
     textvely = font.render('Velocity Y_i', True, (255, 0, 255))
