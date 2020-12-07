@@ -12,9 +12,19 @@ class InputBox:
     def __init__(self, x, y, w, h, text=''):
         self.rect = pg.Rect(x, y, w, h)
         self.color = COLOR_INACTIVE
-        self.text = text
-        self.txt_surface = FONT.render(text, True, self.color)
+        self.text = "0.0"
+        self.textsave = 0.0
+        self.txt_surface = FONT.render(self.text, True, self.color)
         self.active = False
+
+
+    def gettext(self):
+        try:
+            self.textsave = float(self.text)
+            return float(self.text)
+        except:
+            print ("invalid input")
+            return self.textsave
 
     def handle_event(self, event):
         if event.type == pg.MOUSEBUTTONDOWN:
