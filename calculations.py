@@ -13,9 +13,9 @@ def sun_gravity(location: Vector2):
     return Vector2(magnitude * -cos(angle), magnitude * sin(angle))
 
 
-def angle_to_sun(rocket_position: Vector2, sun_position: Vector2):
-    dx = rocket_position.x - sun_position.x
-    dy = rocket_position.y - sun_position.y
+def angle_to_sun(planet_position: Vector2, sun_position: Vector2):
+    dx = planet_position.x - sun_position.x
+    dy = planet_position.y - sun_position.y
     return atan2(-dy, dx)
 
 

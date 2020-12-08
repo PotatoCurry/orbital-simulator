@@ -15,27 +15,29 @@ class CelestialBody:
         self.velocity.x = Xi #pixel/s
         self.velocity.y = Yi
         self.size = size
+        self.angle = 0
+        self.f = 0
 
     def update(self):
-        self.update_velocity()
+        self.velocity.x += (-cos(self.angle) * self.f) / TIME_CONSTANT
+        self.velocity.y += (sin(self.angle) * self.f) / TIME_CONSTANT
+        self.velocity.x += sun_gravity(self.position).x / TIME_CONSTANT
+        self.velocity.y += sun_gravity(self.position).y / TIME_CONSTANT
         self.position += self.velocity / TIME_CONSTANT
 
-    def update_velocity(self):
+    def update_acceleration(self):
         for planet in planetsList:
             if self.id != planet.id:
                 dx = denormalize_distance(self.position.x - planet.position.x)*1000 #pixels to 500000km to meters
                 dy = denormalize_distance(self.position.y - planet.position.y)*1000 #pixels to 500000km to meters
-                angle = atan2(dy, dx)  # Calculate angle between planets
+                self.angle = atan2(dy, dx)  # Calculate angle between planets
                 d = sqrt(pow(dx, 2) + pow(dy, 2))  # Calculate distance
-
-                f = (
-                    normalize_distance(GRAVITATIONAL_CONSTANT * planet.mass / pow(d*1000,2))*1000 #meters to km to pixels
+                self.f = (
+                    normalize_distance(GRAVITATIONAL_CONSTANT * planet.mass / pow(d,2))/1000 #meters to km to pixels
                 )  # Calculate gravitational force
+                print(str(self.id)+": "+str(GRAVITATIONAL_CONSTANT * planet.mass / pow(d,2)))
+                print(d)
 
-                self.velocity.x += (-cos(angle) * f) / TIME_CONSTANT
-                self.velocity.y += (sin(angle) * f) / TIME_CONSTANT
-        self.velocity.x += sun_gravity(self.position).x / TIME_CONSTANT
-        self.velocity.y += sun_gravity(self.position).y / TIME_CONSTANT
 
     def draw(self, screen):
         pygame.draw.circle(

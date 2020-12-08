@@ -18,11 +18,13 @@ font = pygame.font.SysFont('Arial', 20)
 #earth
 planetsList.append(CelestialBody(Vector2(500, 500 + normalize_distance(147100000)), 5.97219e24, 0, (0, 0, 255), normalize_distance(30.29), 0, 5))
 #moon
-planetsList.append(CelestialBody(Vector2(500, 500 + normalize_distance(147100000 + 384400)), 7.34767309e22, 1, (255, 255, 255), normalize_distance(30.59), 0, 1))
-#murcury
-planetsList.append(CelestialBody(Vector2(500, 500 + normalize_distance(42500000)), 3.285e23, 2, (200, 100, 30), normalize_distance(112.59), 0, 3))
+#planetsList.append(CelestialBody(Vector2(500, 500 + normalize_distance(147100000 + 384400)), 7.34767309e22, 1, (255, 255, 255), normalize_distance(30.29+1.022), 0, 1))
+#mercury
+planetsList.append(CelestialBody(Vector2(500, 500 + normalize_distance(68492000)), 3.285e23, 1, (200, 100, 30), normalize_distance(48), 0, 3))
 #venus
-planetsList.append(CelestialBody(Vector2(500, 500 + normalize_distance(100000000)), 4e24, 3, (200, 20, 20), normalize_distance(35.59), 0, 4))
+planetsList.append(CelestialBody(Vector2(500, 500 + normalize_distance(107860000)), 4.867e24, 2, (200, 20, 20), normalize_distance(35.02), 0, 4))
+#mars
+planetsList.append(CelestialBody(Vector2(500, 500 + normalize_distance(222480000)), 6.39e23, 3, (200, 20, 20), normalize_distance(24.1), 0, 4))
 #Init vel and angle text boxes
 input_velx = InputBox(120, 850, 140, 32)  #x y w h
 input_vely = InputBox(120, 900, 140, 32)
@@ -62,6 +64,8 @@ while running:
     
 
     if play:  #after start
+        for planet in planetsList:
+            planet.update_acceleration()
         for planet in planetsList:
             planet.update()
       
