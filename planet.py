@@ -26,14 +26,11 @@ class Planet:
             if self.id != planet.id:
                 dx = denormalize_distance(self.position.x - planet.position.x)*1000 #pixels to 500000km to meters
                 dy = denormalize_distance(self.position.y - planet.position.y)*1000 #pixels to 500000km to meters
-                angle = atan2(-dy, dx)  # Calculate angle between planets
-                d = sqrt((dx ** 2) + (dy ** 2))  # Calculate distance
-
-                if d == 0:
-                    d = 0.000001  # Prevent division by zero error
+                angle = atan2(dy, dx)  # Calculate angle between planets
+                d = sqrt(pow(dx,2) + pow(dy,2))  # Calculate distance
 
                 f = (
-                    normalize_distance(GRAVITATIONAL_CONSTANT * planet.mass / (d ** 2))*1000 #meters to km to pixels
+                    normalize_distance(GRAVITATIONAL_CONSTANT * planet.mass / pow(d*1000,2))*1000 #meters to km to pixels
                 )  # Calculate gravitational force
 
                 self.velocity.x += (-cos(angle) * f) / TIME_CONSTANT

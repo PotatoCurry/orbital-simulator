@@ -15,8 +15,14 @@ FramePerSec = pygame.time.Clock()
 font = pygame.font.SysFont('Arial', 20)
 
 # Adding Planets
-planetsList.append(Planet(Vector2(500, 500+normalize_distance(147100000)), 5.97219e24, 0, (0,0,255), normalize_distance(30.29), 0, 3))
-#planetsList.append(Planet(Vector2(500, 500+normalize_distance(147100000+384400)), 7.34767309e22, 1, (255,255,255), normalize_distance(30.59), 0, 1))
+#earth
+planetsList.append(Planet(Vector2(500, 500+normalize_distance(147100000)), 5.97219e24, 0, (0,0,255), normalize_distance(30.29), 0, 5))
+#moon
+planetsList.append(Planet(Vector2(500, 500+normalize_distance(147100000+384400)), 7.34767309e22, 1, (255,255,255), normalize_distance(30.59), 0, 1))
+#murcury 
+planetsList.append(Planet(Vector2(500, 500+normalize_distance(42500000)), 3.285e23, 2, (200,100,30), normalize_distance(112.59), 0, 3))
+#venus
+planetsList.append(Planet(Vector2(500, 500+normalize_distance(100000000)), 4e24, 3, (200,20,20), normalize_distance(35.59), 0, 4))
 #Init vel and angle text boxes
 input_velx = InputBox(120, 850, 140, 32)  #x y w h
 input_vely = InputBox(120, 900, 140, 32)
@@ -56,8 +62,9 @@ while running:
     
 
     if(play): #after start
-        planetsList[0].update()
-        #planetsList[1].update()
+        for planet in planetsList:
+            planet.update()
+      
         time = round(pygame.time.get_ticks()/1000)
     else:
         #keep time at zero before starting
@@ -76,8 +83,9 @@ while running:
 
     # Draw to the display
     #pygame.draw.circle(screen, (0, 0, 255),rocket.position, 5)
-    planetsList[0].draw(screen)
-    #planetsList[1].draw(screen)
+    for planet in planetsList:
+        planet.draw(screen)
+ 
     screen.blit(info0, (20, 0))
     #screen.blit(info1, (20, 20))
     #screen.blit(info2, (20, 40))
