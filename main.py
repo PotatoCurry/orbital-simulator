@@ -3,7 +3,7 @@ from pygame.math import Vector2
 
 from calculations import denormalize_distance, normalize_distance
 from globals import FPS, planetsList, SUN_POS
-from planet import Planet
+from celestial_body import CelestialBody
 from textbox import InputBox
 pygame.init()
 
@@ -16,13 +16,13 @@ font = pygame.font.SysFont('Arial', 20)
 
 # Adding Planets
 #earth
-planetsList.append(Planet(Vector2(500, 500+normalize_distance(147100000)), 5.97219e24, 0, (0,0,255), normalize_distance(30.29), 0, 5))
+planetsList.append(CelestialBody(Vector2(500, 500 + normalize_distance(147100000)), 5.97219e24, 0, (0, 0, 255), normalize_distance(30.29), 0, 5))
 #moon
-planetsList.append(Planet(Vector2(500, 500+normalize_distance(147100000+384400)), 7.34767309e22, 1, (255,255,255), normalize_distance(30.59), 0, 1))
-#murcury 
-planetsList.append(Planet(Vector2(500, 500+normalize_distance(42500000)), 3.285e23, 2, (200,100,30), normalize_distance(112.59), 0, 3))
+planetsList.append(CelestialBody(Vector2(500, 500 + normalize_distance(147100000 + 384400)), 7.34767309e22, 1, (255, 255, 255), normalize_distance(30.59), 0, 1))
+#murcury
+planetsList.append(CelestialBody(Vector2(500, 500 + normalize_distance(42500000)), 3.285e23, 2, (200, 100, 30), normalize_distance(112.59), 0, 3))
 #venus
-planetsList.append(Planet(Vector2(500, 500+normalize_distance(100000000)), 4e24, 3, (200,20,20), normalize_distance(35.59), 0, 4))
+planetsList.append(CelestialBody(Vector2(500, 500 + normalize_distance(100000000)), 4e24, 3, (200, 20, 20), normalize_distance(35.59), 0, 4))
 #Init vel and angle text boxes
 input_velx = InputBox(120, 850, 140, 32)  #x y w h
 input_vely = InputBox(120, 900, 140, 32)
@@ -32,10 +32,10 @@ input_boxes = [input_velx, input_vely, input_ang]
 # Run until the user asks to quit
 running = True
 
-start = False #simulation started or not
-play = False #simulation play or pause
+start = False  #simulation started or not
+play = False  #simulation play or pause
 
-rocket_acceleration = Vector2(0,0) #save acceleration so display works when paused
+rocket_acceleration = Vector2(0,0)  #save acceleration so display works when paused
 
 while running:
     # Constant refresh instructions
@@ -46,10 +46,10 @@ while running:
             box.handle_event(event)
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE: #space play/pauses 
-                if(not start):
+                if not start:
                     start = True 
                 else:
-                    play = (not play)
+                    play = not play
             #if event.key ==pygame.K_R: #restart
 
                 
@@ -61,14 +61,14 @@ while running:
     pygame.draw.circle(screen, (255, 255, 0), SUN_POS, 64)  # Draw the Sun
     
 
-    if(play): #after start
+    if play:  #after start
         for planet in planetsList:
             planet.update()
       
         time = round(pygame.time.get_ticks()/1000)
     else:
         #keep time at zero before starting
-        if(not start):  #init values in text boxes
+        if not start:  #init values in text boxes
             time = 0
 
     # TODO: Properly determine the denormalized values

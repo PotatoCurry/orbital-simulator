@@ -5,7 +5,7 @@ from pygame.math import Vector2
 from math import atan2, sin, cos, sqrt
 
 
-class Planet:
+class CelestialBody:
     def __init__(self, position: Vector2, mass, id, color, Xi, Yi, size):
         self.position = position #pixel
         self.mass = mass #kilogram
@@ -17,17 +17,16 @@ class Planet:
         self.size = size
 
     def update(self):
-        self.getVelocity()
+        self.update_velocity()
         self.position += self.velocity / TIME_CONSTANT
 
-
-    def getVelocity(self):
+    def update_velocity(self):
         for planet in planetsList:
             if self.id != planet.id:
                 dx = denormalize_distance(self.position.x - planet.position.x)*1000 #pixels to 500000km to meters
                 dy = denormalize_distance(self.position.y - planet.position.y)*1000 #pixels to 500000km to meters
                 angle = atan2(dy, dx)  # Calculate angle between planets
-                d = sqrt(pow(dx,2) + pow(dy,2))  # Calculate distance
+                d = sqrt(pow(dx, 2) + pow(dy, 2))  # Calculate distance
 
                 f = (
                     normalize_distance(GRAVITATIONAL_CONSTANT * planet.mass / pow(d*1000,2))*1000 #meters to km to pixels
