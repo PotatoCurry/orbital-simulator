@@ -118,6 +118,7 @@ while running:
     info4 = font.render('Y Velocity: ' + str(round(denormalize_distance(selected_planet.velocity.y),3))+ " km/s", True, (255, 0, 255))
     #info5 = font.render('X Acceleration: ' + str(round(denormalize_distance(rocket_acceleration.x)*1000,6)) + " m/s/s", True, (255, 0, 255))
     #info6 = font.render('Y Acceleration: ' + str(round(denormalize_distance(rocket_acceleration.y)*1000,6)) + " m/s/s", True, (255, 0, 255))
+    info7 = font.render('Total Energy: ' + str(round(selected_planet.tEnergy*(10**-32),2)) + "e32 Joules", True, (255, 0, 255))
 
     # Draw to the display
     #pygame.draw.circle(screen, (0, 0, 255),rocket.position, 5)
@@ -134,6 +135,7 @@ while running:
     screen.blit(info2, (700, 850))
     screen.blit(info3, (700, 870))
     screen.blit(info4, (700, 890))
+    screen.blit(info7, (700, 910))
 
     screen.blit(alpha_surf, (0, 0))
     pygame.display.flip()
