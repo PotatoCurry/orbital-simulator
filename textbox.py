@@ -12,8 +12,8 @@ class InputBox:
     def __init__(self, x, y, w, h, text=''):
         self.rect = pg.Rect(x, y, w, h)
         self.color = COLOR_INACTIVE
-        self.text = "0.0"
-        self.textsave = 0.0
+        self.text = "1"
+        self.textsave = 1
         self.txt_surface = FONT.render(self.text, True, self.color)
         self.active = False
 

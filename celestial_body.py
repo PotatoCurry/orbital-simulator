@@ -6,7 +6,7 @@ from math import atan2, sin, cos, sqrt
 
 
 class CelestialBody:
-    def __init__(self, position: Vector2, mass, id, color, Xi, Yi, size):
+    def __init__(self, name, position: Vector2, mass, id, color, Xi, Yi, size):
         self.position = position #pixel
         self.mass = mass #kilogram
         self.id = id
@@ -17,6 +17,7 @@ class CelestialBody:
         self.size = size
         self.angle = 0
         self.f = 0
+        self.name = name
 
     def update(self):
         self.velocity.x += (-cos(self.angle) * self.f) / TIME_CONSTANT
@@ -35,9 +36,6 @@ class CelestialBody:
                 self.f = (
                     normalize_distance(GRAVITATIONAL_CONSTANT * planet.mass / pow(d,2))/1000 #meters to km to pixels
                 )  # Calculate gravitational force
-                print(str(self.id)+": "+str(GRAVITATIONAL_CONSTANT * planet.mass / pow(d,2)))
-                print(d)
-
 
     def draw(self, screen):
         pygame.draw.circle(

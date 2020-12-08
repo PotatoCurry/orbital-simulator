@@ -1,6 +1,7 @@
 from pygame import Vector2
 
 FPS = 60
+
 TIME_CONSTANT = .00006  # Used to adjust
 
 SUN_RADIUS = 695500  #km
