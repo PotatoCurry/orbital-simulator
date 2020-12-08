@@ -1,11 +1,10 @@
 import pygame as pg
-
+from globals import SPEED_MULTIPLIER
 
 pg.init()
 COLOR_INACTIVE = pg.Color('lightskyblue3')
 COLOR_ACTIVE = pg.Color('dodgerblue2')
 FONT = pg.font.Font(None, 32)
-
 
 class InputBox:
 
@@ -18,13 +17,14 @@ class InputBox:
         self.active = False
 
 
-    def gettext(self):
+    def updatetext(self):
         try:
+            SPEED_MULTIPLIER =  float(self.text)
             self.textsave = float(self.text)
-            return float(self.text)
+            
         except:
             print ("invalid input")
-            return self.textsave
+            SPEED_MULTIPLIER =  self.textsave
 
     def handle_event(self, event):
         if event.type == pg.MOUSEBUTTONDOWN:

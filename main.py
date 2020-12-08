@@ -2,7 +2,7 @@ import pygame
 from pygame.math import Vector2
 
 from calculations import denormalize_distance, normalize_distance
-from globals import FPS, planetsList, SUN_POS
+from globals import FPS, planetsList, SUN_POS, SPEED_MULTIPLIER
 from celestial_body import CelestialBody
 from textbox import InputBox
 pygame.init()
@@ -10,7 +10,9 @@ pygame.init()
 # Set up the drawing window
 WIDTH = 1000
 HEIGHT = 1000
+
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
+alpha_surf = pygame.Surface(screen.get_size(), pygame.SRCALPHA) #alpha surface for trails
 FramePerSec = pygame.time.Clock()
 font = pygame.font.SysFont('Arial', 20)
 
@@ -69,7 +71,9 @@ while running:
 
     mouse = pygame.mouse.get_pos() 
 
+ 
     screen.fill((0, 0, 0))  # Fill the background with black
+    
 
     pygame.draw.line(screen,(50,50,50),(500,0),(500,1000))
     pygame.draw.line(screen,(50,50,50),(0,500),(1000,500))
@@ -80,6 +84,7 @@ while running:
     if play:  #after start
         for planet in planetsList:
             planet.update_acceleration()
+
         for planet in planetsList:
             planet.update()
         
@@ -89,7 +94,7 @@ while running:
         if not start:  #init values in text boxes
             time = 0
 
-    Multiplier = input_speed.gettext()
+    input_speed.updatetext()
 
     #print(TIME_CONSTANT)
     #Ui Elements 
@@ -119,7 +124,10 @@ while running:
     #pygame.draw.circle(screen, (0, 0, 255),rocket.position, 5)
     for planet in planetsList:
         planet.draw(screen)
+        pygame.draw.circle(alpha_surf, planet.color, (planet.position.x,planet.position.y),1)
     
+    pygame.draw.circle(alpha_surf, (255,255,255), (100,100),1)
+
     screen.blit(speed_text, (20, 40))
     screen.blit(into_time, (20, 10))
     screen.blit(info_planet, (700, 800))
@@ -128,6 +136,7 @@ while running:
     screen.blit(info3, (700, 870))
     screen.blit(info4, (700, 890))
 
+    screen.blit(alpha_surf, (0, 0))
     pygame.display.flip()
     FramePerSec.tick(FPS)
 

@@ -20,6 +20,7 @@ class CelestialBody:
         self.name = name
 
     def update(self):
+        print (TIME_CONSTANT)
         self.velocity.x += (-cos(self.angle) * self.f) / TIME_CONSTANT
         self.velocity.y += (sin(self.angle) * self.f) / TIME_CONSTANT
         self.velocity.x += sun_gravity(self.position).x / TIME_CONSTANT
