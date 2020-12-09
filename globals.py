@@ -7,4 +7,4 @@ SUN_POS = Vector2(500, 500)
 GRAVITATIONAL_CONSTANT = 6.67408e-11
 NORMALIZATION_CONSTANT = 1 / 500000  # 1 pixel / 500000 km
 
-planetsList = []
+planetsList = [] # list of planets displayed

@@ -7,7 +7,7 @@ from celestial_body import CelestialBody
 from textbox import InputBox
 
 pygame.init()
-pygame.display.set_caption("Launch Simulator")
+pygame.display.set_caption("Orbital Simulator")
 
 # Set up the drawing window
 WIDTH = 1000
@@ -22,11 +22,10 @@ font = pygame.font.SysFont('Arial', 20)
 # earth
 planetsList.append(CelestialBody("Earth", Vector2(500, 500 + normalize_distance(147100000)), 5.97219e24, 0, (0, 0, 255), normalize_distance(30.29), 0, 5))
 # moon
-# planetsList.append(CelestialBody(Vector2(500, 500 + normalize_distance(147100000 + 384400)), 7.34767309e22, 1, (255, 255, 255), normalize_distance(30.29+1.022), 0, 1))
 # mercury
 planetsList.append(CelestialBody("Mercury", Vector2(500, 500 + normalize_distance(46000000)), 3.285e23, 1, (200, 100, 30), normalize_distance(58.98), 0, 3))
 # venus
-planetsList.append(CelestialBody("Venus", Vector2(500, 500 + normalize_distance(107476000)), 4.867e24, 2, (234, 13, 191), normalize_distance(35.26), 0, 4))
+planetsList.append(CelestialBody("Venus", Vector2(500, 500 + normalize_distance(107476000)), 4.867e24, 2, (234, 213, 191), normalize_distance(35.26), 0, 4))
 # mars
 planetsList.append(CelestialBody("Mars", Vector2(500, 500 + normalize_distance(206600000)), 6.39e23, 3, (200, 20, 20), normalize_distance(26.50), 0, 4))
 # Time Scale text box
@@ -65,11 +64,6 @@ while running:
                 selected_planet = planetsList[3]
             # if event.key ==pygame.K_R: # restart
 
-    # pygame.draw.circle(screen, (200,100,30), (60, 750), 15)
-    # pygame.draw.circle(screen, (234,213,191), (60, 800), 30)
-    # pygame.draw.circle(screen, (0,100,255), (60, 875), 40)
-    # pygame.draw.circle(screen, (200,0,0), (60, 950), 30)
-
     mouse = pygame.mouse.get_pos() 
 
     screen.fill((0, 0, 0))  # Fill the background with black
@@ -92,11 +86,14 @@ while running:
         if not start:  # init values in text boxes
             time = 0
 
-    input_speed.updatetext()
+    
 
     # UI Elements
+    #text box
+    input_speed.updatetext()
     input_speed.update()
-    input_speed.draw(screen)   
+    input_speed.draw(screen)  
+
     # top left
     into_time = font.render('Time Elapsed: ' + str(time)+ " seconds", True, (255, 0, 255))
     speed_text = font.render('Simulation Speed:                                   x', True, (255, 0, 255))
@@ -108,6 +105,7 @@ while running:
     pygame.draw.circle(screen, (234, 213, 191), (60, 800), 30)
     pygame.draw.circle(screen, (0, 100, 255), (60, 875), 40)
     pygame.draw.circle(screen, (200, 0, 0), (60, 950), 30)
+
     # bottom right
     info_planet = font.render(selected_planet.name, True, (255, 0, 255))
     info1 = font.render('X Position: ' + str(round(denormalize_distance(selected_planet.position.x-SUN_POS.x))) + " km", True, (255, 0, 255))
@@ -119,13 +117,11 @@ while running:
     info7 = font.render('Total Energy: ' + str(round(selected_planet.tEnergy * (10 ** -32), 2)) + "e32 Joules", True, (255, 0, 255))
 
     # Draw to the display
-    # pygame.draw.circle(screen, (0, 0, 255),rocket.position, 5)
-    for planet in planetsList:
+    for planet in planetsList: #loop and draw planets as well as trails
         planet.draw(screen)
         pygame.draw.circle(alpha_surf, planet.color, (planet.position.x,planet.position.y),1)
     
     pygame.draw.circle(alpha_surf, (255,255,255), (100,100),1)
-
     screen.blit(speed_text, (20, 40))
     screen.blit(into_time, (20, 10))
     screen.blit(info_planet, (700, 800))
