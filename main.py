@@ -5,7 +5,9 @@ from calculations import denormalize_distance, normalize_distance
 from globals import FPS, planetsList, SUN_POS
 from celestial_body import CelestialBody
 from textbox import InputBox
+
 pygame.init()
+pygame.display.set_caption("Launch Simulator")
 
 # Set up the drawing window
 WIDTH = 1000
