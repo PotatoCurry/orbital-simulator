@@ -21,8 +21,6 @@ class CelestialBody:
         self.tEnergy = 0
 
     def update(self, time_constant):
-        print(time_constant)
-        #add velocities 
         self.velocity.x += (-cos(self.angle) * self.f) / time_constant
         self.velocity.y += (sin(self.angle) * self.f) / time_constant
         self.velocity.x += sun_gravity(self.position).x / time_constant
