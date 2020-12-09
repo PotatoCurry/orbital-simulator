@@ -22,11 +22,9 @@ class InputBox:
     def updatetext(self):
         try:
             self.speed_multiplier = float(self.text)
-            self.textsave = float(self.text)
+            self.time_constant = FPS / self.speed_multiplier
         except:
             print("invalid input")
-            self.speed_multiplier = self.textsave
-            self.time_constant = FPS / self.speed_multiplier
 
     def handle_event(self, event):
         if event.type == pg.MOUSEBUTTONDOWN:
