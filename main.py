@@ -85,7 +85,7 @@ while running:
             planet.update_acceleration()
 
         for planet in planetsList:
-            planet.update(input_speed.speed_multiplier)
+            planet.update(input_speed.time_constant)
         
         time = round(pygame.time.get_ticks()/1000)
     else:
