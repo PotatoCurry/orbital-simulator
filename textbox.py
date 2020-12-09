@@ -1,30 +1,32 @@
 import pygame as pg
-from globals import SPEED_MULTIPLIER
+
+from globals import FPS
 
 pg.init()
 COLOR_INACTIVE = pg.Color('lightskyblue3')
 COLOR_ACTIVE = pg.Color('dodgerblue2')
 FONT = pg.font.Font(None, 32)
 
-class InputBox:
 
+class InputBox:
     def __init__(self, x, y, w, h, text=''):
         self.rect = pg.Rect(x, y, w, h)
         self.color = COLOR_INACTIVE
         self.text = "1"
         self.textsave = 1
         self.txt_surface = FONT.render(self.text, True, self.color)
+        self.speed_multiplier = 1
+        self.time_constant = FPS / self.speed_multiplier
         self.active = False
-
 
     def updatetext(self):
         try:
-            SPEED_MULTIPLIER =  float(self.text)
+            self.speed_multiplier = float(self.text)
             self.textsave = float(self.text)
-            
         except:
-            print ("invalid input")
-            SPEED_MULTIPLIER =  self.textsave
+            print("invalid input")
+            self.speed_multiplier = self.textsave
+            self.time_constant = FPS / self.speed_multiplier
 
     def handle_event(self, event):
         if event.type == pg.MOUSEBUTTONDOWN:
@@ -58,6 +60,3 @@ class InputBox:
         screen.blit(self.txt_surface, (self.rect.x+5, self.rect.y+5))
         # Blit the rect.
         pg.draw.rect(screen, self.color, self.rect, 2)
-
-
-

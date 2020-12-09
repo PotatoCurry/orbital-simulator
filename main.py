@@ -2,7 +2,7 @@ import pygame
 from pygame.math import Vector2
 
 from calculations import denormalize_distance, normalize_distance
-from globals import FPS, planetsList, SUN_POS, SPEED_MULTIPLIER
+from globals import FPS, planetsList, SUN_POS
 from celestial_body import CelestialBody
 from textbox import InputBox
 pygame.init()
@@ -85,7 +85,7 @@ while running:
             planet.update_acceleration()
 
         for planet in planetsList:
-            planet.update()
+            planet.update(input_speed.speed_multiplier)
         
         time = round(pygame.time.get_ticks()/1000)
     else:

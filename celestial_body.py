@@ -1,5 +1,5 @@
 from calculations import denormalize_distance, sun_gravity, normalize_distance
-from globals import planetsList, GRAVITATIONAL_CONSTANT, TIME_CONSTANT, SUN_MASS, SUN_POS
+from globals import planetsList, GRAVITATIONAL_CONSTANT, SUN_MASS, SUN_POS
 import pygame
 from pygame.math import Vector2
 from math import atan2, sin, cos, sqrt
@@ -20,13 +20,13 @@ class CelestialBody:
         self.name = name
         self.tEnergy = 0
 
-    def update(self):
-        print (TIME_CONSTANT)
-        self.velocity.x += (-cos(self.angle) * self.f) / TIME_CONSTANT
-        self.velocity.y += (sin(self.angle) * self.f) / TIME_CONSTANT
-        self.velocity.x += sun_gravity(self.position).x / TIME_CONSTANT
-        self.velocity.y += sun_gravity(self.position).y / TIME_CONSTANT
-        self.position += self.velocity / TIME_CONSTANT
+    def update(self, time_constant):
+        print(time_constant)
+        self.velocity.x += (-cos(self.angle) * self.f) / time_constant
+        self.velocity.y += (sin(self.angle) * self.f) / time_constant
+        self.velocity.x += sun_gravity(self.position).x / time_constant
+        self.velocity.y += sun_gravity(self.position).y / time_constant
+        self.position += self.velocity / time_constant
 
         self.tEnergy = 0
         for planet in planetsList:
@@ -43,7 +43,6 @@ class CelestialBody:
         self.tEnergy += (
             ((self.mass / 2) * velSquare) - ((GRAVITATIONAL_CONSTANT*SUN_MASS*self.mass)*(1/sqrt(dx**2+dy**2)))
         )
-
 
     def update_acceleration(self):
         for planet in planetsList:

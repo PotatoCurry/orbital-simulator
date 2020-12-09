@@ -1,8 +1,6 @@
 from pygame import Vector2
 
 FPS = 60
-SPEED_MULTIPLIER = 1000000  # TODO: Take in from text box
-TIME_CONSTANT = FPS / SPEED_MULTIPLIER
 
 SUN_RADIUS = 695500  #km
 SUN_MASS = 1.989e30  # 5.972 * 10^24 kg
