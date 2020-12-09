@@ -7,12 +7,12 @@ from math import atan2, sin, cos, sqrt
 
 class CelestialBody:
     def __init__(self, name, position: Vector2, mass, id, color, Xi, Yi, size):
-        self.position = position #pixel
-        self.mass = mass #kilogram
+        self.position = position  # pixel
+        self.mass = mass  # kilogram
         self.id = id
-        self.velocity = Vector2(0, 0) #pixel/s
+        self.velocity = Vector2(0, 0)  # pixel/s
         self.color=color
-        self.velocity.x = Xi #pixel/s
+        self.velocity.x = Xi  # pixel/s
         self.velocity.y = Yi
         self.size = size
         self.angle = 0
@@ -47,17 +47,15 @@ class CelestialBody:
     def update_acceleration(self):
         for planet in planetsList:
             if self.id != planet.id:
-                dx = denormalize_distance(self.position.x - planet.position.x)*1000 #pixels to 500000km to meters
-                dy = denormalize_distance(self.position.y - planet.position.y)*1000 #pixels to 500000km to meters
+                dx = denormalize_distance(self.position.x - planet.position.x)*1000  # pixels to 500000km to meters
+                dy = denormalize_distance(self.position.y - planet.position.y)*1000  # pixels to 500000km to meters
                 self.angle = atan2(dy, dx)  # Calculate angle between planets
                 d = sqrt(pow(dx, 2) + pow(dy, 2))  # Calculate distance
                 self.f = (
-                    normalize_distance(GRAVITATIONAL_CONSTANT * planet.mass / pow(d,2))/1000 #meters to km to pixels
+                    normalize_distance(GRAVITATIONAL_CONSTANT * planet.mass / pow(d, 2))/1000  # meters to km to pixels
                 )  # Calculate gravitational force
 
     def draw(self, screen):
         pygame.draw.circle(
             screen, self.color, self.position, self.size
         )
-      
-

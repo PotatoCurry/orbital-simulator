@@ -7,9 +7,9 @@ from globals import SUN_MASS, GRAVITATIONAL_CONSTANT, NORMALIZATION_CONSTANT, SU
 
 # Find the acceleration of gravity on the rocket
 def sun_gravity(location: Vector2):
-    distance = sqrt(pow(location.x-SUN_POS.x,2)+pow(location.y-SUN_POS.y,2))
-    angle = angle_to_sun(location, Vector2(500,500))
-    magnitude = normalize_distance((GRAVITATIONAL_CONSTANT * SUN_MASS) / pow(denormalize_distance(distance)*1000, 2))/1000
+    distance = sqrt(pow(location.x - SUN_POS.x, 2) + pow(location.y - SUN_POS.y, 2))
+    angle = angle_to_sun(location, Vector2(500, 500))
+    magnitude = normalize_distance((GRAVITATIONAL_CONSTANT * SUN_MASS) / pow(denormalize_distance(distance)*1000, 2)) / 1000
     return Vector2(magnitude * -cos(angle), magnitude * sin(angle))
 
 
